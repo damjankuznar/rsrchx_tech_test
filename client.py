@@ -22,7 +22,7 @@ def _get_credentials():
 def _authenticated_backend_request(endpoint, method="POST", data=None):
     auth = _get_credentials()
     response = requests.request(method, f"{BASE_URL}{endpoint}", json=data, auth=auth)
-    if response!= 200:
+    if response.status_code != 200:
         message = []
         for key, value in response.json().items():
             message.append(f"{key}: {value}")
@@ -48,6 +48,12 @@ def food_list(args):
     data = _backend_request("/api/foods/")
     for food in data:
         print(f"{food['id']} {food['title']}")
+
+
+def food_detail(args):
+    data = _backend_request(f"/api/foods/{args.food_id}/")
+    for key, value in data.items():
+        print(f"{key}: {value}")
 
 
 def cart_add(args):
@@ -123,6 +129,7 @@ def login(args):
 
 def main():
     parser = argparse.ArgumentParser(description="Shopping interface")
+    parser.set_defaults(func=lambda args: parser.print_help())
     subparsers = parser.add_subparsers()
 
     login_parser = subparsers.add_parser("login")
@@ -130,7 +137,10 @@ def main():
     login_parser.set_defaults(func=login)
 
     cart_parser = subparsers.add_parser("cart")
+    cart_parser.set_defaults(func=lambda args: cart_parser.print_help())
     cart_subparsers = cart_parser.add_subparsers()
+    cart_view_parser = cart_subparsers.add_parser("view")
+    cart_view_parser.set_defaults(func=cart_view)
     cart_add_parser = cart_subparsers.add_parser("add")
     cart_add_parser.add_argument("food_id", type=int)
     cart_add_parser.add_argument("quantity", type=decimal.Decimal)
@@ -140,9 +150,9 @@ def main():
     cart_remove_parser.set_defaults(func=cart_remove)
     cart_checkout_parser = cart_subparsers.add_parser("checkout")
     cart_checkout_parser.set_defaults(func=cart_checkout)
-    cart_parser.set_defaults(func=cart_view)
 
     orders_parser = subparsers.add_parser("orders")
+    orders_parser.set_defaults(func=lambda args: orders_parser.print_help())
     orders_subparsers = orders_parser.add_subparsers()
     orders_list_parser = orders_subparsers.add_parser("list")
     orders_list_parser.set_defaults(func=orders_list)
@@ -150,12 +160,17 @@ def main():
     orders_details_parser.add_argument("order_id", type=int)
     orders_details_parser.set_defaults(func=order_details)
 
-    food_parser = subparsers.add_parser("food")
+    food_parser = subparsers.add_parser("foods")
+    food_parser.set_defaults(func=lambda args: food_parser.print_help())
     food_subparsers = food_parser.add_subparsers()
     food_list_parser = food_subparsers.add_parser("list")
     food_list_parser.set_defaults(func=food_list)
+    food_detail_parser = food_subparsers.add_parser("detail")
+    food_detail_parser.add_argument("food_id")
+    food_detail_parser.set_defaults(func=food_detail)
 
     admin_parser = subparsers.add_parser("admin")
+    admin_parser.set_defaults(func=lambda args: admin_parser.print_help())
     admin_subparsers = admin_parser.add_subparsers()
     admin_orders_parser = admin_subparsers.add_parser("orders")
     admin_orders_parser.set_defaults(func=admin_orders_list)
@@ -168,7 +183,7 @@ def main():
     admin_orders_completed_parser.set_defaults(func=admin_orders_completed)
 
     args = parser.parse_args()
-    if hasattr(args, 'func'):
+    if hasattr(args, "func"):
         args.func(args)
 
 

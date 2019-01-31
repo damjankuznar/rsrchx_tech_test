@@ -28,4 +28,3 @@ class CartSerializer(serializers.ModelSerializer):
         fields = ("id", "status", "created_at", "updated_at", "items")
         read_only_fields = ("id", "created_at", "updated_at", "items")
         depth = 1
-

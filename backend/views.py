@@ -32,8 +32,7 @@ class CartManagementViewSet(viewsets.ViewSet):
         return self._serialize_cart(cart)
 
     def add_item(self, request):
-        data = parsers.JSONParser().parse(request)
-        item_serializer = serializers.ItemSerializer(data=data)
+        item_serializer = serializers.ItemSerializer(data=request.data)
         if item_serializer.is_valid():
             cart = self._get_cart(request.user)
             food = item_serializer.validated_data["food"]

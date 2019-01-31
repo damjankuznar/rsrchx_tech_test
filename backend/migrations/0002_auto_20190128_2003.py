@@ -5,14 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('backend', '0001_initial'),
-    ]
+    dependencies = [("backend", "0001_initial")]
 
-    operations = [
-        migrations.RenameField(
-            model_name='cartitems',
-            old_name='amount',
-            new_name='quantity',
-        ),
-    ]
+    operations = [migrations.RenameField(model_name="cartitems", old_name="amount", new_name="quantity")]

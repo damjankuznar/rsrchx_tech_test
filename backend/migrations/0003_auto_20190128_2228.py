@@ -5,13 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('backend', '0002_auto_20190128_2003'),
-    ]
+    dependencies = [("backend", "0002_auto_20190128_2003")]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='CartItems',
-            new_name='CartItem',
-        ),
-    ]
+    operations = [migrations.RenameModel(old_name="CartItems", new_name="CartItem")]
