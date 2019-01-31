@@ -1,4 +1,11 @@
-## Spec
+Rsrchx Tech Test
+================
+
+## Running the application
+
+
+
+## Tech Test Requirements
 Build a command line app for a food delivery service. The customer user interface should
 present the user with the ability to:
 

@@ -7,7 +7,6 @@ class Food(models.Model):
     title = models.CharField(max_length=64, null=False)
     description = models.TextField(null=False)
     price = models.DecimalField(null=False, decimal_places=2, max_digits=18)
-    active = models.BooleanField(null=False, default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

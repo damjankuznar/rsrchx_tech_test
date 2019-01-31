@@ -19,15 +19,6 @@ def user(django_user_model):
 
 
 @pytest.fixture
-def manager(django_user_model):
-    username = "manager1"
-    password = "bar"
-    user = django_user_model.objects.create_user(username=username, password=password)
-    user.save()
-    return user
-
-
-@pytest.fixture
 def admin(django_user_model):
     username = "admin1"
     password = "bar"
@@ -39,10 +30,10 @@ def admin(django_user_model):
 @pytest.fixture
 def foods(db):
     foods_list = [
-        dict(title="Bananas", description="Pleasure the monkey in you", price=1, active=True),
-        dict(title="Bread", description="Wheaty sensation for you", price="0.30", active=True),
-        dict(title="Yogurt", description="Creamy yoguth ", price="10.01", active=True),
-        dict(title="Avocado", description="Make yourself a tasty guacamole", price="5.32", active=False),
+        dict(title="Bananas", description="Pleasure the monkey in you", price=1),
+        dict(title="Bread", description="Wheaty sensation for you", price="0.30"),
+        dict(title="Yogurt", description="Creamy yoguth ", price="10.01"),
+        dict(title="Avocado", description="Make yourself a tasty guacamole", price="5.32"),
     ]
     foods = []
     for food_dict in foods_list:

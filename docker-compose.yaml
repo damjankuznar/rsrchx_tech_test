@@ -1,0 +1,15 @@
+version: "3.6"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    command: /app/start_backend.sh
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    volumes:
+      - db:/app/db
+
+volumes:
+  db:
