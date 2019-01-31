@@ -14,9 +14,12 @@ class APIError(BaseException):
 
 
 def _get_credentials():
-    with open(".credentials") as f:
-        data = json.load(f)
-        return data["username"], data["password"]
+    try:
+        with open(".credentials") as f:
+            data = json.load(f)
+            return data["username"], data["password"]
+    except FileNotFoundError:
+        raise APIError("You need to login in first")
 
 
 def _authenticated_backend_request(endpoint, method="POST", data=None):
@@ -173,8 +176,10 @@ def main():
     admin_parser.set_defaults(func=lambda args: admin_parser.print_help())
     admin_subparsers = admin_parser.add_subparsers()
     admin_orders_parser = admin_subparsers.add_parser("orders")
-    admin_orders_parser.set_defaults(func=admin_orders_list)
+    admin_orders_parser.set_defaults(func=lambda args: admin_orders_parser.print_help())
     admin_orders_subparsers = admin_orders_parser.add_subparsers()
+    admin_orders_list_parser = admin_orders_subparsers.add_parser("list")
+    admin_orders_list_parser.set_defaults(func=admin_orders_list)
     admin_orders_details_parser = admin_orders_subparsers.add_parser("details")
     admin_orders_details_parser.add_argument("order_id", type=int)
     admin_orders_details_parser.set_defaults(func=admin_orders_details)

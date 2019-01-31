@@ -32,7 +32,7 @@ def foods(db):
     foods_list = [
         dict(title="Bananas", description="Pleasure the monkey in you", price=1),
         dict(title="Bread", description="Wheaty sensation for you", price="0.30"),
-        dict(title="Yogurt", description="Creamy yoguth ", price="10.01"),
+        dict(title="Yogurt", description="Creamy yogurt", price="10.01"),
         dict(title="Avocado", description="Make yourself a tasty guacamole", price="5.32"),
     ]
     foods = []

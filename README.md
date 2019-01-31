@@ -1,8 +1,109 @@
 Rsrchx Tech Test
 ================
 
-## Running the application
+## Setting up the REST API backend
+This guide assumes you have Docker and Docker Compose installed.
 
+**Build the Docker images**  
+```bash
+docker-compose build
+```
+
+**Run the backend**  
+```bash
+docker-compose up -d
+```
+
+**Load food data (optional)**  
+This will load example food records.
+```bash
+docker-compose run backend python manage.py loaddata backend/fixtures/foods.json
+``` 
+
+**Create a new user**  
+The following command will prompt you for username and password. 
+```bash
+docker-compose run backend python manage.py createuser
+```
+
+**Create a new admin user**  
+The following command will prompt you for username, email and password. 
+```bash
+docker-compose run backend python manage.py createsuperuser
+```
+
+## Using the command line client
+You will enter the backend container with the following command from which you will
+have access to the client command line script and will be able to query REST API backend
+with it.
+```bash
+ docker-compose exec backend bash
+```
+
+### Public methods
+**List foods**
+```bash
+./client.py foods list
+```
+**Food details**
+```bash
+./client.py foods detail {food_id}
+```
+
+### Private methods
+To access private methods you need to login as a user first with the following command, 
+where `{user}` is a username that you used for registering. 
+```bash
+./client.py login {user}
+```
+
+**View cart**
+```bash
+./client.py cart view
+```
+
+**Add item to cart**
+```bash
+./client.py cart add {food_id} {quantity}
+```
+
+**Add item to cart**
+```bash
+./client.py cart remove {item_id}
+```
+
+**Submit the order**
+```bash
+./client.py cart checkout
+```
+
+**List orders**
+```bash
+./client.py orders list
+```
+
+**View order details**
+```bash
+./client.py orders details {order_id}
+```
+
+### Admin method
+To access admin methods you need to login as an admin first.
+
+**List pending orders**
+```bash
+./client.py admin orders list
+```
+
+**View order details**
+```bash
+./client.py admin orders details {order_id}
+```
+
+**Mark order as completed**
+```bash
+./client.py admin orders completed {order_id}
+```
 
 
 ## Tech Test Requirements
