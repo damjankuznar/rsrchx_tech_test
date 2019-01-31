@@ -14,7 +14,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-**Load food data (optional)**  
+**Load food data**  
 This will load example food records.
 ```bash
 docker-compose run backend python manage.py loaddata backend/fixtures/foods.json
@@ -103,6 +103,12 @@ To access admin methods you need to login as an admin first.
 **Mark order as completed**
 ```bash
 ./client.py admin orders completed {order_id}
+```
+
+## Running tests
+The following command will execute tests in container and output the test code coverage information.
+```bash
+docker-compose run backend pytest --cov
 ```
 
 
